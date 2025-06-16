@@ -17,6 +17,7 @@ spec:
       containers:
       - name: bankapp
         image: adijaiswal/bankapp:blue # Adjust the image tag for the blue version
+        imagePullPolicy: Always         # <-- This forces Kubernetes to pull latest from Docker Hub
         ports:
         - containerPort: 8080
         env:
