@@ -1,11 +1,22 @@
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: bankapp-service
+  name: bankapp-blue
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 8080
+  replicas: 1
   selector:
-    app: bankapp
+    matchLabels:
+      app: bankapp
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: bankapp
+        version: blue
+    spec:
+      containers:
+      - name: bankapp
+        image: rhaloubi8/bankapp:${TAG}  # <-- Use the pipeline tag here
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
